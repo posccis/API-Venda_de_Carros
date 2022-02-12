@@ -5,7 +5,7 @@ namespace Sistema_Vendas.API.Models
 {
     public class Usuario
     {
-        public Usuario(int id, string nome, string sobrenome, string email, int telefone, DateTime dataNascimento,Endereco endereco)
+        public Usuario(int id, string nome, string sobrenome, string email, int telefone, DateTime dataNascimento)
         {
             this.Id = id;
             this.Nome = nome;
@@ -13,17 +13,16 @@ namespace Sistema_Vendas.API.Models
             this.Email = email;
             this.Telefone = telefone;
             this.DataNascimento = dataNascimento;
-            this.Endereco = endereco;
         }
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Email { get; set; }
         public int Telefone { get; set; }
-        public Endereco Endereco { get; set; }
         public DateTime DataNascimento { get; set; }
         public DateTime DataIni { get; set; } = DateTime.Now;
-
-        public IEnumerable<Automovel> Automoveis { get; set; }
+        public Endereco Endereco { get; set; }
+        public IEnumerable<Motocicleta> Motocicletas { get; set; }
+        public IEnumerable<Carro> Carros { get; set; }
     }
 }

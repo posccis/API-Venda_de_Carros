@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Sistema_Vendas.API.Data;
 
 namespace Sistema_Vendas.API
 {
@@ -26,8 +28,16 @@ namespace Sistema_Vendas.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            services.AddDbContext<VendasContext>(
+                    context => {
+                        string conn = Configuration.GetConnectionString("MySqlConn");
+                        context.UseMySql(conn , ServerVersion.AutoDetect(conn));
+                }
+            );
+            services.AddControllers()
+                    .AddNewtonsoftJson(
+                        opt => opt.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sistema_Vendas.API", Version = "v1" });
