@@ -13,5 +13,7 @@ namespace Sistema_Vendas.API.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public IEnumerable<SubCategoria> SubCategorias { get; set; }
+        public IEnumerable<Carro> Carros { get; set; }
+        public IEnumerable<Motocicleta> Motocicletas { get; set; }
     }
 }

@@ -5,11 +5,12 @@ namespace Sistema_Vendas.API.Models
 {
     public class Carro
     {
-        public Carro(int usuarioId, string marca, string modelo, float valor,int ano, string cor, string combustivel, int quilometragem, bool troca, bool ativo)
+        public Carro(int usuarioId, string marca, string modelo, string categoria,float valor,int ano, string cor, string combustivel, int quilometragem, bool troca, bool ativo)
         {
             this.UsuarioId = usuarioId;
             this.Marca = marca;
             this.Modelo = modelo;
+            this.Categoria = categoria;
             this.Valor = valor;
             this.Ano = ano;
             this.Cor = cor;
@@ -22,6 +23,7 @@ namespace Sistema_Vendas.API.Models
         public int UsuarioId { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }
+        public string Categoria { get; set; }
         public float Valor { get; set; }
         public int Ano { get; set; }
         public string Cor { get; set; }

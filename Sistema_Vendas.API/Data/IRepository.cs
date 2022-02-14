@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Sistema_Vendas.API.Models;
 
 namespace Sistema_Vendas.API.Data
@@ -10,23 +11,23 @@ namespace Sistema_Vendas.API.Data
         bool SaveChanges();  
 
         //<--- Usuarios
-        public Usuario[] GetUsuarios();
-        public Usuario GetUsuarioById(int Id);
-        public Usuario GetUsuarioEnder(int Id);
+        public Task<Usuario[]> GetUsuarios();
+        public Task<Usuario> GetUsuarioById(int id);
+        //public Task<Endereco> GetUsuarioEnder(int id);
         //--->Usuarios
 
         //<---Carros
-        public Carro[] GetCarros();
-        public Carro GetCarroById(int Id);           
-        public Carro[] GetCarroByMarca(string Marca);
-        public Carro[] GetCarroByCateg(string Categ);
+        public Task<Carro[]> GetCarros();
+        public Task<Carro[]> GetCarroById(int Id);           
+        //public Task<Carro[]> GetCarroByMarca(string marca);
+        //public Task<Carro[]> GetCarroByCateg(string categ);
         //--->Carros
 
         //<--- Motocicletas
-        public Motocicleta[] GetMoto();
-        public Motocicleta GetMotoById(int Id);
-        public Motocicleta[] GetMotoByMarca(string Marca);
-        public Motocicleta[] GetMotoByCateg(string Categ);
+        public Task<Motocicleta[]> GetMoto();
+        public Task<Motocicleta[]> GetMotoById(int id);
+       // public Task<Motocicleta[]> GetMotoByMarca(string marca);
+       // public Task<Motocicleta[]> GetMotoByCateg(string categ);
         //--->Motocicletas
     }
 }

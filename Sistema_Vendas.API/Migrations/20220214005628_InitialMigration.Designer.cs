@@ -9,8 +9,8 @@ using Sistema_Vendas.API.Data;
 namespace Sistema_Vendas.API.Migrations
 {
     [DbContext(typeof(VendasContext))]
-    [Migration("20220211220616_firstMigration")]
-    partial class firstMigration
+    [Migration("20220214005628_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,12 @@ namespace Sistema_Vendas.API.Migrations
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Categoria")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Combustivel")
                         .HasColumnType("longtext");
@@ -65,6 +71,8 @@ namespace Sistema_Vendas.API.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("UsuarioId");
+
+                    b.HasIndex("CategoriaId");
 
                     b.HasIndex("UsuarioId1");
 
@@ -122,6 +130,12 @@ namespace Sistema_Vendas.API.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Categoria")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Cilindradas")
                         .HasColumnType("int");
 
@@ -165,6 +179,8 @@ namespace Sistema_Vendas.API.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("UsuarioId");
+
+                    b.HasIndex("CategoriaId");
 
                     b.HasIndex("UsuarioId1");
 
@@ -221,6 +237,10 @@ namespace Sistema_Vendas.API.Migrations
 
             modelBuilder.Entity("Sistema_Vendas.API.Models.Carro", b =>
                 {
+                    b.HasOne("Sistema_Vendas.API.Models.Categoria", null)
+                        .WithMany("Carros")
+                        .HasForeignKey("CategoriaId");
+
                     b.HasOne("Sistema_Vendas.API.Models.Usuario", null)
                         .WithMany("Carros")
                         .HasForeignKey("UsuarioId1")
@@ -239,6 +259,10 @@ namespace Sistema_Vendas.API.Migrations
 
             modelBuilder.Entity("Sistema_Vendas.API.Models.Motocicleta", b =>
                 {
+                    b.HasOne("Sistema_Vendas.API.Models.Categoria", null)
+                        .WithMany("Motocicletas")
+                        .HasForeignKey("CategoriaId");
+
                     b.HasOne("Sistema_Vendas.API.Models.Usuario", null)
                         .WithMany("Motocicletas")
                         .HasForeignKey("UsuarioId1")
@@ -259,6 +283,10 @@ namespace Sistema_Vendas.API.Migrations
 
             modelBuilder.Entity("Sistema_Vendas.API.Models.Categoria", b =>
                 {
+                    b.Navigation("Carros");
+
+                    b.Navigation("Motocicletas");
+
                     b.Navigation("SubCategorias");
                 });
 

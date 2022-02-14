@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sistema_Vendas.API.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,6 +80,8 @@ namespace Sistema_Vendas.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Modelo = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Categoria = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Valor = table.Column<float>(type: "float", nullable: false),
                     Ano = table.Column<int>(type: "int", nullable: false),
                     Cor = table.Column<string>(type: "longtext", nullable: true)
@@ -94,11 +96,18 @@ namespace Sistema_Vendas.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Data_Anuncio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Ativo = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
                     UsuarioId1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carros", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Carros_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categorias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Carros_Usuarios_UsuarioId1",
                         column: x => x.UsuarioId1,
@@ -145,6 +154,8 @@ namespace Sistema_Vendas.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Modelo = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Categoria = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Valor = table.Column<float>(type: "float", nullable: false),
                     Ano = table.Column<int>(type: "int", nullable: false),
                     Cor = table.Column<string>(type: "longtext", nullable: true)
@@ -163,11 +174,18 @@ namespace Sistema_Vendas.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Data_Anuncio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Ativo = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
                     UsuarioId1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Motocicletas", x => x.UsuarioId);
+                    table.ForeignKey(
+                        name: "FK_Motocicletas_Categorias_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categorias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Motocicletas_Usuarios_UsuarioId1",
                         column: x => x.UsuarioId1,
@@ -178,9 +196,19 @@ namespace Sistema_Vendas.API.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Carros_CategoriaId",
+                table: "Carros",
+                column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Carros_UsuarioId1",
                 table: "Carros",
                 column: "UsuarioId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Motocicletas_CategoriaId",
+                table: "Motocicletas",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Motocicletas_UsuarioId1",

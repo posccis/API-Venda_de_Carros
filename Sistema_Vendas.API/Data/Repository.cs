@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sistema_Vendas.API.Models;
 
@@ -21,70 +22,92 @@ namespace Sistema_Vendas.API.Data
         {
             _context.Remove(Entity);
         }
-
-        public Carro[] GetCarroByCateg(string Categ)
+/*
+        public async Task<Carro[]> GetCarroByCateg(string categ)
         {
-            throw new System.NotImplementedException();
+            var carros = await _context.Carros.Where(car => car.Categoria == categ).ToArrayAsync();
+
+            return carros;
         }
 
-        public Carro GetCarroById(int Id)
+
+        public async Task<Carro[]> GetCarroByMarca(string marca)
         {
-            throw new System.NotImplementedException();
+            var carros = await _context.Carros.Where(car => car.Marca == marca).ToArrayAsync();
+
+            return carros;
+        }
+*/
+        public async Task<Carro[]> GetCarros()
+        {
+            var carros = await _context.Carros.ToArrayAsync();
+
+            return carros;
         }
 
-        public Carro[] GetCarroByMarca(string Marca)
+        public async Task<Carro[]> GetCarroById(int id)
         {
-            throw new System.NotImplementedException();
+            var carros = await _context.Carros.Where( moto => moto.UsuarioId == id).ToArrayAsync();
+
+            return carros;
+        }
+        
+
+        public async Task<Motocicleta[]> GetMoto()
+        {
+            var motos = await _context.Motocicletas.ToArrayAsync();
+
+            return motos;
+        }
+        public async Task<Motocicleta[]> GetMotoById(int id)
+        {
+            var motos = await _context.Motocicletas.Where( moto => moto.UsuarioId == id).ToArrayAsync();
+
+            return motos;
+        }
+/*
+        public async Task<Motocicleta[]> GetMotoByCateg(string categ)
+        {
+            var motos = await _context.Motocicletas.Where( moto => moto.Categoria == categ).ToArrayAsync();
+
+            return motos;
         }
 
-        public Carro[] GetCarros()
+
+
+        public async Task<Motocicleta[]> GetMotoByMarca(string marca)
         {
-            throw new System.NotImplementedException();
+            var motos = await _context.Motocicletas.Where(moto => moto.Marca == marca).ToArrayAsync();
+
+            return motos;
         }
-
-        public Motocicleta[] GetMoto()
+*/
+        public async Task<Usuario> GetUsuarioById(int id)
         {
-            throw new System.NotImplementedException();
+            var user = await _context.Usuarios.Where(u => u.Id == id).ToArrayAsync();
+
+            return user.FirstOrDefault();
         }
-
-        public Motocicleta[] GetMotoByCateg(string Categ)
+/*
+        public async Task<Endereco> GetUsuarioEnder(int id)
         {
-            throw new System.NotImplementedException();
-        }
 
-        public Motocicleta GetMotoById(int Id)
-        {
-            throw new System.NotImplementedException();
-        }
+            var query = await _context.Usuarios.Where(user => user.Id == id).ToListAsync();
+            var Ender = query.Find(user => user.Id == id).Endereco;
 
-        public Motocicleta[] GetMotoByMarca(string Marca)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Usuario GetUsuarioById(int Id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Usuario GetUsuarioEnder(int Id)
-        {
-            IQueryable<Usuario> query = _context.Usuarios;
-            query = query.AsNoTracking().Where(user => user.Id == Id);
-            query = query.AsNoTracking().Include(user => user.Endereco);
-
-            return query.FirstOrDefault();
+            return Ender;
 
         }
-
-        public Usuario[] GetUsuarios()
+*/
+        public async Task<Usuario[]> GetUsuarios()
         {
             IQueryable<Usuario> query = _context.Usuarios;
             query = query.Include(a=> a.Endereco);
             query = query.Include(a=> a.Carros);
             query = query.Include(a=> a.Motocicletas);
             query = query.AsNoTracking().OrderBy(user => user.Id);
-            return query.ToArray();
+
+            return await query.ToArrayAsync();
         }
 
         public bool SaveChanges()
